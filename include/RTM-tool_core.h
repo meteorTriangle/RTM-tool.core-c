@@ -33,3 +33,26 @@ class svg{
         void initial(int width, int height);
         FILE *F;
 };
+
+class arrow{
+    public:
+        enum arrow_type {
+            NORTH,
+            SOUTH,
+            EAST,
+            WEST,
+            NORTHEAST,
+            NORTHWEST,
+            SOUTHEAST,
+            SOUTHWEST,
+        };
+        arrow(position* arrow_position, angle* rail_degree, arrow_type type);
+        position* arrow_position;
+        angle* rail_degree;
+        arrow_type type;
+};
+
+class curve{
+    public:
+        curve(arrow* arrow1, arrow* arrow2);
+};

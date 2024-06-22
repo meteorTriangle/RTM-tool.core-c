@@ -25,10 +25,10 @@ position::p position::get_real(){
 }
 
 angle::angle(angle_type type, float degree){
-    if(type == minecraft){
+    if(type == this->minecraft){
         this->degree = degree-90;
     }
-    if(type == real){
+    if(type == this->real){
         this->degree = degree;
     }
     float process_degree = this->degree;
@@ -52,7 +52,7 @@ float angle::get_minecraft(){
     return process_degree;
 }
 float angle::get_real(){
-    float process_degree = this->degree + 90;
+    float process_degree = this->degree;
     return process_degree;
 }
 
@@ -85,4 +85,51 @@ void svg::writedata(char* data){
 void svg::save(){
     fprintf(this->F, "</svg>\n");
     fclose(this->F);
+}
+
+arrow::arrow(position* arrow_position, angle* rail_degree, arrow_type type){
+    float block_int_x = arrow_position->get_minecraft().p1 + 0.5;
+    float block_int_y = arrow_position->get_minecraft().p2 + 0.5;
+    switch (type)
+    {
+    case NORTH:
+        block_int_x += 0;
+        block_int_y += 0.5;
+        break;
+    case SOUTH:
+        block_int_x += 0;
+        block_int_y += -0.5;
+        break;
+    case EAST:
+        block_int_x += -0.5;
+        block_int_y += 0;
+        break;
+    case WEST:
+        block_int_x += 0.5;
+        block_int_y += 0;
+        break;
+    case NORTHEAST:
+        block_int_x += -0.5;
+        block_int_y += 0.5;
+        break;
+    case NORTHWEST:
+        block_int_x += 0.5;
+        block_int_y += 0.5;
+        break;
+    case SOUTHEAST:
+        block_int_x += -0.5;
+        block_int_y += -0.5;
+        break;
+    case SOUTHWEST:
+        block_int_x += 0.5;
+        block_int_y += -0.5;
+        break;
+    
+    default:
+        break;
+    }
+    position arrow_real_position(position::minecraft, block_int_x, block_int_y);
+    this->arrow_position = &arrow_real_position;
+    this->rail_degree = rail_degree;
+    this->type = type;
 }
